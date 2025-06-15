@@ -1,0 +1,28 @@
+# Node/JS tools (if you add Gulp, Sass, etc.)
+node_modules/
+dist/
+build/
+
+# Python (future use)
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+.env
+venv/
+.venv/
+
+# VS Code settings
+.vscode/
+
+# macOS & Windows system files
+.DS_Store
+Thumbs.db
+
+# OS junk
+*.log
+
+# IDE/project metadata
+*.idea/
+*.swp
+*.swo
