@@ -1,0 +1,24 @@
+.bg-wallpaper {
+    /* background-image: url("../img/nerd-wallpaper.png"); */
+    background-color: #5a8ca5;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.bg-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 0;
+}
+
+.position-relative > * {
+    position: relative;
+    z-index: 1;
+}
