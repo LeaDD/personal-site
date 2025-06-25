@@ -1,6 +1,7 @@
 .bg-wallpaper {
-    /* background-image: url("../img/nerd-wallpaper.png"); */
-    background-color: #5a8ca5;
+    position: relative;
+    background-image: url("../img/IMG_2126.jpg");
+    /* background-color: #5a8ca5; */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,9 +17,33 @@
     left: 0;
     background: rgba(0,0,0,0.5);
     z-index: 0;
+    pointer-events: none;
 }
 
 .position-relative > * {
     position: relative;
     z-index: 1;
+}
+
+/* Use Fredoka for main headings */
+h1, h2, h3, .hero-title, .section-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500;
+}
+
+/* Use Quicksand for body and general text */
+body, p, li, a, .nav-link, .btn {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+}
+
+.icon-img {
+    height: 24px;
+    filter: brightness(0) invert(1);
+    vertical-align: middle;
+    margin-top: 6px;
+}
+
+.section-bg {
+    background: linear-gradient(to bottom, #fdf6e3, #d9a066);
 }
