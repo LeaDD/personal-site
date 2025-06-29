@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="position-relative">
+  <div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold">Welcome to the blog!</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">
+        To paraphrase Rik from <em>The Young Ones</em> - "Finally, after years
+        of stagnation...made by amateurs! And perhaps of interest only to two or
+        three people! It's important, right? It's now! And I want to watch!"
+      </p>
+      <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+      <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+        Primary button
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-lg px-4">
+        Secondary
+      </button>
+    </div> -->
+    </div>
+  </div>
+</section>
+
+<section class="section-bg">
+  <div class="container mx-auto position-relative">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7 mt-5">
+        <!-- Post previews -->
+        {% for post in all_posts %}
+        <div>
+          <a class="link-underline-dark" href="#">
+            <h3 class="link-light">{{ post.title }}</h3>
+            <h4 class="link-secondary">{{ post.subtitle }}</h4>
+          </a>
+          <p>
+            Posted by {{ post.author }} on {{ post.date }}
+            <!-- TODO: Only show delete button if user is admin -->
+            {# {% if current_user.admin == True %} #}
+            <a href="#">✘</a>
+            {# {% endif %} #}
+          </p>
+        </div>
+        <hr class="my-4" />
+        {% endfor %}
+
+        <!-- New post  -->
+        <!-- TODO: Only show create new post button if user is admin -->
+        {# {% if current_user.admin == True %} #}
+        <div class="d-flex justify-content-end mb-4">
+          <a class="btn btn-primary float-right" href="#">Create New Post</a>
+        </div>
+        {# {% endif %} #}
+
+        <!-- Pager  -->
+        <div class="d-flex justify-content-end mb-4">
+          <a class="btn btn-secondary" href="#">Older Posts</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

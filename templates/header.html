@@ -1,0 +1,85 @@
+<!-- Header -->
+<div class="pb-5">
+  <div class="bg-overlay"></div>
+  <header class="position-relative">
+    <div class="px-3 py-2">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid">
+            <a
+              href="/"
+              class="navbar-brand d-flex align-items-center text-white"
+            >
+              <img
+                src="{{ url_for('static', filename='img/fedora-dave-tooned.jpeg' )}}"
+                alt="cartoon Dave in Fedora"
+                class="rounded-circle"
+                style="height: 60px; width: 60px; object-fit: cover"
+              />
+              <h1 class="ms-3 mb-0 fs-4">Under Construction</h1>
+            </a>
+
+            <!-- Toggler -->
+            <button
+              class="navbar-toggler text-white"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible Nav Links -->
+            <div
+              class="collapse navbar-collapse justify-content-end"
+              id="navbarNav"
+            >
+              <ul class="navbar-nav text-small">
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-white px-3"
+                    href="{{ url_for('home') }}"
+                  >
+                    <i
+                      class="bi bi-house"
+                      style="font-size: 24px"
+                      width="24"
+                      height="24"
+                      aria-hidden="true"
+                    >
+                    </i>
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-white px-3"
+                    href="{{ url_for('blog_posts') }}"
+                  >
+                    <i class="bi bi-book" style="font-size: 24px"> </i>
+                    Blog
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white px-3" href="#">
+                    <i class="bi bi-rocket" style="font-size: 24px"> </i>
+                    Coming
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white px-3" href="#">
+                    <i class="bi bi-robot" style="font-size: 24px"> </i>
+                    Soon
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+</div>

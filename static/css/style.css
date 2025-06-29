@@ -1,6 +1,13 @@
 .bg-wallpaper {
+  background-image: url("../img/game-table.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% auto;    /* stretch width to container, keep original height */
+}
+
+.bg-wallpaper-footer {
     position: relative;
-    background-image: url("../img/IMG_2126.jpg");
+    background-image: url("../img/game-table.jpg");
     /* background-color: #5a8ca5; */
     background-size: cover;
     background-position: center;
@@ -45,5 +52,7 @@ body, p, li, a, .nav-link, .btn {
 }
 
 .section-bg {
-    background: linear-gradient(to bottom, #fdf6e3, #d9a066);
+    /* background: linear-gradient(to bottom, #fdf6e3, #d9a066); */
+    background-color:black;
+    color: ivory;
 }

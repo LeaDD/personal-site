@@ -1,149 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="../static/img/favicon-dave-toon.ico"
-    />
-    <title>daviddeal.site - It's a bit nerdy</title>
+{% extends 'base.html' %} {% block content %}
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="../static/css/style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Quicksand:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-GU1U0JtVu8zKcZLZ2PxY+alJ2TZYRSuD8GmhLKZL4pyy4N8WvByCvBQnyYVX9QFqAfG9MkmpaL53FJh5vIMr4g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
-    <!-- Header -->
-    <div class="bg-wallpaper pb-5">
-      <div class="bg-overlay"></div>
-      <header class="position-relative">
-        <div class="px-3 py-2">
-          <div class="container">
-            <nav class="navbar navbar-expand-lg">
-              <div class="container-fluid">
-                <a
-                  href="/"
-                  class="navbar-brand d-flex align-items-center text-white"
-                >
-                  <img
-                    src="../static/img/fedora-dave-tooned.jpeg"
-                    alt="cartoon Dave in Fedora"
-                    class="rounded-circle"
-                    style="height: 60px; width: 60px; object-fit: cover"
-                  />
-                  <h1 class="ms-3 mb-0 fs-4">Under Construction</h1>
-                </a>
-
-                <!-- Toggler -->
-                <button
-                  class="navbar-toggler text-white"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarNav"
-                  aria-controls="navbarNav"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Collapsible Nav Links -->
-                <div
-                  class="collapse navbar-collapse justify-content-end"
-                  id="navbarNav"
-                >
-                  <ul class="navbar-nav text-small">
-                    <li class="nav-item">
-                      <a class="nav-link text-white px-3" href="#">
-                        <i
-                          class="bi bi-house"
-                          style="font-size: 24px"
-                          width="24"
-                          height="24"
-                          aria-hidden="true"
-                        >
-                        </i>
-                        Home
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-white px-3" href="#">
-                        <i class="bi bi-book" style="font-size: 24px"> </i>
-                        Blog
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-white px-3" href="#">
-                        <i class="bi bi-rocket" style="font-size: 24px"> </i>
-                        Coming
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-white px-3" href="#">
-                        <i class="bi bi-robot" style="font-size: 24px"> </i>
-                        Soon
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <section class="position-relative">
-        <!-- Hero -->
-        <div class="container col-xxl-8 px-4 pt-1 pb-5">
-          <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-12 col-sm-10 col-lg-6 text-center text-lg-start">
-              <img
-                src="../static/img/patio-dave-cropped-removebg-preview.png"
-                class="d-block mx-auto img-fluid rounded-circle"
-                alt="Dave in ball cap"
-                loading="lazy"
-              />
-            </div>
-            <div class="col-lg-6">
-              <h1 class="display-6 fw-bold text-light lh-1 mb-3">
-                Thanks for stopping by.
-              </h1>
-              <h2 class="fw-bold text-light lh-1 mb-3 text-start">
-                Bits and pieces coming together. Stay tuned.
-              </h2>
-              <p class="lead text-light">
-                For the time being, this site is my digital sandbox — a place to
-                experiment, learn, and maybe share a few things that make life
-                more interesting.
-              </p>
-              <p class="lead text-light">
-                There’s no grand plan — just some projects, ideas, and bits of
-                stuff I’ve tossed together along the way. Stick around, poke
-                around, and maybe even find something useful (or at least
-                amusing).
-              </p>
-              <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+<section class="position-relative">
+  <!-- Hero -->
+  <div class="container col-xxl-8 px-4 pt-1 pb-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-12 col-sm-10 col-lg-6 text-center text-lg-start">
+        <img
+          src="{{ url_for('static', filename='img/patio-dave-cropped-removebg-preview.png') }}"
+          class="d-block mx-auto img-fluid rounded-circle"
+          alt="Dave in ball cap"
+          loading="lazy"
+        />
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-6 fw-bold text-light lh-1 mb-3">
+          Thanks for stopping by.
+        </h1>
+        <h2 class="fw-bold text-light lh-1 mb-3 text-start">
+          Bits and pieces coming together. Stay tuned.
+        </h2>
+        <p class="lead text-light">
+          For the time being, this site is my digital sandbox — a place to
+          experiment, learn, and maybe share a few things that have made my life
+          more interesting.
+        </p>
+        <p class="lead text-light">
+          There’s no grand plan — just some projects, ideas, and bits of stuff
+          I’ve tossed together along the way. Stick around, poke around, and
+          maybe even find something useful (or at least amusing).
+        </p>
+        <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">
                   Primary
                 </button>
@@ -151,339 +37,181 @@
                   Default
                 </button>
               </div> -->
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Placeholder -->
-    <section class="section-bg"> 
-      <div class="container marketing">
-      <!-- Three columns of text below the carousel -->
-      <!-- <div class="row">
-        <div class="col-lg-4">
-          <svg
-            aria-label="Placeholder"
-            class="bd-placeholder-img rounded-circle"
-            height="140"
-            preserveAspectRatio="xMidYMid slice"
-            role="img"
-            width="140"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Placeholder</title>
-            <rect
-              width="100%"
-              height="100%"
-              fill="var(--bs-secondary-color)"
-            ></rect>
-          </svg>
-          <h2 class="fw-normal">Heading</h2>
-          <p>
-            Some representative placeholder content for the three columns of
-            text below the carousel. This is the first column.
-          </p>
-          <p><a class="btn btn-secondary" href="#">View details »</a></p>
-        </div> -->
-      <!-- /.col-lg-4 -->
-      <!-- <div class="col-lg-4">
-          <svg
-            aria-label="Placeholder"
-            class="bd-placeholder-img rounded-circle"
-            height="140"
-            preserveAspectRatio="xMidYMid slice"
-            role="img"
-            width="140"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Placeholder</title>
-            <rect
-              width="100%"
-              height="100%"
-              fill="var(--bs-secondary-color)"
-            ></rect>
-          </svg>
-          <h2 class="fw-normal">Heading</h2>
-          <p>
-            Another exciting bit of representative placeholder content. This
-            time, we've moved on to the second column.
-          </p>
-          <p><a class="btn btn-secondary" href="#">View details »</a></p>
-        </div> -->
-      <!-- /.col-lg-4 -->
-      <!-- <div class="col-lg-4">
-          <svg
-            aria-label="Placeholder"
-            class="bd-placeholder-img rounded-circle"
-            height="140"
-            preserveAspectRatio="xMidYMid slice"
-            role="img"
-            width="140"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Placeholder</title>
-            <rect
-              width="100%"
-              height="100%"
-              fill="var(--bs-secondary-color)"
-            ></rect>
-          </svg>
-          <h2 class="fw-normal">Heading</h2>
-          <p>
-            And lastly this, the third column of representative placeholder
-            content.
-          </p>
-          <p><a class="btn btn-secondary" href="#">View details »</a></p>
-        </div> -->
-      <!-- /.col-lg-4 -->
-      <!-- </div> -->
-      <!-- /.row -->
-      <!-- START THE FEATURETTES -->
-      <!-- <hr class="featurette-divider" /> -->
-      <div class="row featurette mb-5 pt-5">
-        <div class="col-md-7">
-          <h2 class="featurette-heading fw-normal lh-1 text-start">
-            I am a software developer.
-            <span class="text-info">For work and play.</span>
-          </h2>
-          <p class="lead">
-            Professionally my focus is currently Big Data, ETL and the
-            construction of data pipelines. Primarily this involves Python,
-            Spark, Hadoop, Hive, SQL/HQL and some shell scripting. The team is
-            beginnging to branch into agentic AI, currently dabbling in Google
-            ADK.
-          </p>
-          <p>
-            My personal pursuits do have some overlap with this. I am always
-            trying to broaden my core foundations with Python and other
-            languages. Lately, that has led me to experiment with Flask, the
-            framework with which this site is being built. And like everyone
-            else these days I have been captivated by the possibilities of AI.
-            This has lead to some exploration of Google ADK, CrewAI and
-            LangChain.
-          </p>
-        </div>
-        <div class="col-md-5">
-          <img
-            src="../static/img/pexels-kevin-ku-92347-577585.jpg"
-            alt="dev screen and glasses"
-            class="img-fluid"
-          />
-        </div>
+<!-- Placeholder -->
+<section class="section-bg position-relative">
+  <div class="container marketing">
+    <!-- START THE FEATURETTES -->
+    <!-- <hr class="featurette-divider" /> -->
+    <div class="row featurette mb-5 pt-5">
+      <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1 text-start">
+          I am a software developer.
+          <span class="text-info">For work and play.</span>
+        </h2>
+        <p class="lead">
+          Professionally my focus is currently Big Data, ETL and the
+          construction of data pipelines. Primarily this involves Python, Spark,
+          Hadoop, Hive, SQL/HQL and some shell scripting. The team is beginnging
+          to branch into agentic AI, currently dabbling in Google ADK.
+        </p>
+        <p>
+          My personal pursuits do have some overlap with this. I am always
+          trying to broaden my core foundations with Python and other languages.
+          Lately, that has led me to experiment with Flask, the framework with
+          which this site is being built. And like everyone else these days I
+          have been captivated by the possibilities of AI. This has lead to some
+          exploration of Google ADK, CrewAI and LangChain.
+        </p>
+      </div>
+      <div class="col-md-5">
+        <img
+          src="{{ url_for('static', filename='img/pexels-kevin-ku-92347-577585.jpg') }}"
+          alt="dev screen and glasses"
+          class="img-fluid"
+        />
+      </div>
+    </div>
+    <hr class="featurette-divider" />
+    <div class="row featurette my-5">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1">
+          I am a gaming dork!
+          <span class="text-info">From waaayyy back.</span>
+        </h2>
+        <p class="lead">
+          Long ago, I stumbled into a basement game of Advanced Dungeons &
+          Dragons at a friend's house — and it changed my life.
+        </p>
+        <p>
+          Since then, I've played all manner of tabletop and digital
+          role-playing games, along with a growing library of fantasy and sci-fi
+          board games. There's something magical about collaborative
+          storytelling and rolling dice with friends that never gets old.
+        </p>
+        <p>
+          But nothing makes me feel more at home than a game convention. The
+          energy, the creativity, the sense of community — it's my happy place.
+          Whether it's demoing new games, diving into marathon campaigns, or
+          just nerding out with fellow fans, I always come away inspired and
+          recharged.
+        </p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <img
+          src="{{ url_for('static', filename='img/unpainted-minis.jpg') }}"
+          alt="unpainted gaming miniatures"
+          class="img-fluid"
+        />
+      </div>
+    </div>
+    <hr class="featurette-divider" />
+    <div class="row featurette my-5">
+      <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1">
+          I love dogs!
+          <span class="text-info">And all animals.</span>
+        </h2>
+        <p class="lead">
+          That is my beloved — and dearly departed — hound dog, Elvis.
+        </p>
+        <p>
+          Our dogs have opened my eyes and my heart to animals of all kinds.
+          What started as a simple companionship grew into a deep and lasting
+          love that now feels like a defining part of who I am.
+        </p>
+        <p>
+          Elvis, in particular, taught me patience, empathy, and the quiet
+          strength of unconditional love. That bond changed me for the better,
+          and it continues to shape how I see the world.
+        </p>
+        <p>Thanks, Houndy ❤️</p>
+      </div>
+      <div class="col-md-5">
+        <img
+          src="{{ url_for('static', filename='img/houndizzle.jpg') }}"
+          alt="my old hound dog"
+          class="img-fluid"
+        />
       </div>
       <hr class="featurette-divider" />
       <div class="row featurette my-5">
         <div class="col-md-7 order-md-2">
           <h2 class="featurette-heading fw-normal lh-1">
-            I am a gaming dork!
-            <span class="text-info">From waaayyy back.</span>
+            I’m a drone enthusiast —
+            <span class="text-info">from time to time.</span>
           </h2>
           <p class="lead">
-            Long ago, I stumbled into a basement game of Advanced Dungeons &
-            Dragons at a friend's house — and it changed my life.
+            Specifically, I’m into FPV drones. The sensation of flying freely
+            through the air is hard to put into words.
           </p>
           <p>
-            Since then, I've played all manner of tabletop and digital
-            role-playing games, along with a growing library of fantasy and
-            sci-fi board games. There's something magical about collaborative
-            storytelling and rolling dice with friends that never gets old.
+            For several years, I flew freestyle regularly with a close friend
+            and even got to attend Rotor Riot Rampage in 2023 — an epic
+            multi-day FPV event.
           </p>
           <p>
-            But nothing makes me feel more at home than a game convention. The
-            energy, the creativity, the sense of community — it's my happy
-            place. Whether it's demoing new games, diving into marathon
-            campaigns, or just nerding out with fellow fans, I always come away
-            inspired and recharged.
+            I never got especially good at it, to be honest. And while crashing
+            is just part of the freestyle game, the constant repair cycle
+            started wearing me down. Still, I know I’ll come back to it — when
+            it's fun, it's an absolute blast.
           </p>
         </div>
         <div class="col-md-5 order-md-1">
           <img
-            src="../static/img/unpainted-minis.jpg"
-            alt="unpainted gaming miniatures"
+            src="{{ url_for('static', filename='img/my-drones.jpg') }}"
+            alt="my drones hanging on the wall"
             class="img-fluid"
           />
         </div>
       </div>
-      <hr class="featurette-divider" />
-      <div class="row featurette my-5">
-        <div class="col-md-7">
-          <h2 class="featurette-heading fw-normal lh-1">
-            I love dogs!
-            <span class="text-info">And all animals.</span>
-          </h2>
-          <p class="lead">
-            That is my beloved — and dearly departed — hound dog, Elvis.
-          </p>
-          <p>
-            Our dogs have opened my eyes and my heart to animals of all kinds.
-            What started as a simple companionship grew into a deep and lasting
-            love that now feels like a defining part of who I am.
-          </p>
-          <p>
-            Elvis, in particular, taught me patience, empathy, and the quiet
-            strength of unconditional love. That bond changed me for the better,
-            and it continues to shape how I see the world.
-          </p>
-          <p>Thanks, Houndy ❤️</p>
-        </div>
-        <div class="col-md-5">
-          <img
-            src="../static/img/houndizzle.jpg"
-            alt="my old hound dog"
-            class="img-fluid"
-          />
-        </div>
-        <hr class="featurette-divider" />
-        <div class="row featurette my-5">
-          <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading fw-normal lh-1">
-              I’m a drone enthusiast —
-              <span class="text-info">from time to time.</span>
-            </h2>
-            <p class="lead">
-              Specifically, I’m into FPV drones. The sensation of flying freely
-              through the air is hard to put into words.
-            </p>
-            <p>
-              For several years, I flew freestyle regularly with a close friend
-              and even got to attend Rotor Riot Rampage in 2023 — an epic
-              multi-day FPV event.
-            </p>
-            <p>
-              I never got especially good at it, to be honest. And while
-              crashing is just part of the freestyle game, the constant repair
-              cycle started wearing me down. Still, I know I’ll come back to it
-              — when it's fun, it's an absolute blast.
-            </p>
-          </div>
-          <div class="col-md-5 order-md-1">
-            <img
-              src="../static/img/my-drones.jpg"
-              alt="unpainted gaming miniatures"
-              class="img-fluid"
+    </div>
+    <!-- <hr class="featurette-divider" /> -->
+    <!-- /END THE FEATURETTES -->
+  </div>
+
+  <!-- Contact -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 mb-5">
+        <h3>Want to contact me?</h3>
+        <form>
+          <div class="mb-2">
+            <label for="name" class="form-label mb-1">Your Name</label>
+            <input
+              type="text"
+              class="form-control form-control-s py-1 px-2"
+              id="name"
+              placeholder="Jane Doe"
             />
           </div>
-        </div>
-      </div>
-      <!-- <hr class="featurette-divider" /> -->
-      <!-- /END THE FEATURETTES -->
-    </div>
-
-    <!-- Contact -->
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-6 mb-5">
-          <h3>Want to contact me?</h3>
-          <form>
-            <div class="mb-2">
-              <label for="name" class="form-label mb-1">Your Name</label>
-              <input
-                type="text"
-                class="form-control form-control-sm py-1 px-2"
-                id="name"
-                placeholder="Jane Doe"
-              />
-            </div>
-            <div class="mb-2">
-              <label for="email" class="form-label mb-1">Your Email</label>
-              <input
-                type="email"
-                class="form-control form-control-s py-1 px-2"
-                id="email"
-                placeholder="name@example.com"
-              />
-            </div>
-            <div class="mb-2">
-              <label for="message" class="form-label mb-1">Message</label>
-              <textarea
-                class="form-control form-control-sm py-1 px-2"
-                id="message"
-                rows="3"
-                placeholder="Write your message here..."
-              ></textarea>
-            </div>
-            <button type="submit" class="btn btn-dark btn-sm">Send</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    </section>
-    
-
-    <!-- Footer -->
-    <div class="bg-wallpaper">
-      <div class="bg-overlay"></div>
-      <div class="container position-relative">
-        <footer class="py-3">
-          <div class="row">
-            <div class="col-12 mb-1">
-              <h3 class="text-center">Links</h3>
-              <ul class="nav justify-content-center">
-                <li class="nav-item mb-2 mx-3">
-                  <a href="#" class="nav-link p-0 text-light">Home</a>
-                </li>
-                <li class="nav-item mb-2 mx-3">
-                  <a href="#" class="nav-link p-0 text-light">Blog</a>
-                </li>
-                <li class="nav-item mb-2 mx-3">
-                  <a href="#" class="nav-link p-0 text-light">Coming</a>
-                </li>
-                <li class="nav-item mb-2 mx-3">
-                  <a href="#" class="nav-link p-0 text-light">Soon</a>
-                </li>
-                <!-- <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-body-secondary">About</a>
-                </li> -->
-              </ul>
-            </div>
+          <div class="mb-2">
+            <label for="email" class="form-label mb-1">Your Email</label>
+            <input
+              type="email"
+              class="form-control form-control-s py-1 px-2"
+              id="email"
+              placeholder="name@example.com"
+            />
           </div>
-          <div
-            class="d-flex flex-column flex-sm-row justify-content-between py-1 my-1 border-top"
-          >
-            <p>© 2025 darthmidlo, Inc. All rights reserved.</p>
-            <ul class="list-unstyled d-flex">
-              <li class="ms-3">
-                <a 
-                  class="link-light d-flex align-items-center" 
-                  href="https://boardgamegeek.com/user/leadd" 
-                  target="_blank"
-                  aria-label="Instagram"
-                >
-                  <img src="../static/img/Simpleicons-Team-Simple-Boardgamegeek.512.png" alt="BGG logo" height="24" class="icon-img"></i>
-                </a>
-              </li>
-              <li class="ms-3">
-                <a
-                  class="link-light"
-                  href="https://www.facebook.com/david.deal.56"
-                  target="_blank"
-                  aria-label="Facebook"
-                >
-                  <i class="bi bi-facebook" style="font-size: 24px"></i>
-                </a>
-              </li>
-              <li class="ms-3">
-                <a
-                  class="link-light"
-                  href="https://github.com/LeaDD?tab=repositories"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Github"
-                >
-                  <i class="bi bi-github" style="font-size: 24px"></i>
-                </a>
-              </li>
-            </ul>
+          <div class="mb-2">
+            <label for="message" class="form-label mb-1">Message</label>
+            <textarea
+              class="form-control form-control-s py-1 px-2"
+              id="message"
+              rows="3"
+              placeholder="Write your message here..."
+            ></textarea>
           </div>
-        </footer>
+          <button type="submit" class="btn btn-dark btn-sm">Send</button>
+        </form>
       </div>
     </div>
+  </div>
+</section>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+{% endblock %}
