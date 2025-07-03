@@ -33,7 +33,7 @@
             <h4 class="link-secondary">{{ post.subtitle }}</h4>
           </a>
           <p>
-            Posted by {{ post.author }} on {{ post.date }}
+            Posted by {{ post.author.name }} on {{ post.date }}
             <!-- TODO: Only show delete button if user is admin -->
             {# {% if current_user.admin == True %} #}
             <a href="#">✘</a>
