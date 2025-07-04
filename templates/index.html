@@ -1,17 +1,9 @@
 {% extends 'base.html' %} {% block content %}
 
-<section class="position-relative bg-overlay">
+<section class="position-relative">
   <!-- Hero -->
   <div class="container col-xxl-8 px-4 pt-1 pb-5">
     <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-12 col-lg-6 text-center text-lg-start">
-        <img
-          src="{{ url_for('static', filename='img/patio-dave-cropped-removebg-preview.png') }}"
-          class="d-block mx-auto img-fluid rounded-circle"
-          alt="Dave in ball cap"
-          loading="lazy"
-        />
-      </div>
       <div class="col-lg-6">
         <h1 class="display-6 fw-bold text-light lh-1 mb-3">
           Thanks for stopping by.
@@ -37,6 +29,14 @@
                   Default
                 </button>
               </div> -->
+      </div>
+      <div class="col-12 col-lg-6 text-center text-lg-start">
+        <img
+          src="{{ url_for('static', filename='img/patio-dave-cropped-removebg-preview.png') }}"
+          class="d-block mx-auto img-fluid rounded-circle"
+          alt="Dave in ball cap"
+          loading="lazy"
+        />
       </div>
     </div>
   </div>
