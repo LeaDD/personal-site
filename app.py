@@ -1,11 +1,24 @@
 from dotenv import load_dotenv
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
 import os
 
 load_dotenv()
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("MY_SECRET_KEY")
+
+
+# Create database
+class Base(DeclarativeBase):
+    pass
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URI", "sqlite:///posts.db")
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)
 
 
 @app.route("/")
