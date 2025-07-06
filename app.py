@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, flash
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
-from flask_login import LoginManager, login_user, UserMixin
+from flask_login import LoginManager, login_user, UserMixin, current_user, logout_user
 import os
 from forms import RegisterForm, LoginForm
 from flask_bootstrap import Bootstrap5
@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, Text, ForeignKey
 from typing import List
 from datetime import datetime
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from slugify import slugify
 
 
@@ -23,8 +23,12 @@ bootstrap = Bootstrap5(app)
 #############################################
 # Configure Flask login manager
 #############################################
-# login_manager = LoginManager()
-# login_manager.init_app(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
 
 #############################################
 # Create database
@@ -163,6 +167,28 @@ def register():
             login_user(new_user)
             return redirect(url_for("blog_posts"))
     return render_template("register.html", form=registration_form)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        email = login_form.email.data
+        password = login_form.password.data
+        
+        # Find user by the email entered to see if they are registered
+        user = db.session.execute(db.Select(User).where(User.email == email)).scalar_one_or_none()
+        
+        if not user:
+            flash("Sorry, that email is not registered.")
+        elif not check_password_hash(user.password, password):
+            flash("Sorry, that password is invalid. Please try again.")
+        elif check_password_hash(user.password, password):
+            login_user(user)
+            print(current_user.is_authenticated)
+            return redirect(url_for("home"))
+        else:
+            print("Something is amiss")
+    return render_template("login.html", form=login_form)
 
 
 if __name__ == "__main__":

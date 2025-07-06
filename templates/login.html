@@ -1,0 +1,45 @@
+{% from "bootstrap5/form.html" import render_form %} {% extends "base.html" %}
+{% block content %}
+
+<section class="position-relative">
+  <div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold my-5">Welcome back!</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead my-5">
+        At some point this will probably allow access to some other stuff. But
+        for now this is just me implementing basic auth and backend DB pieces.
+        Cuz learning.
+      </p>
+      <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+          Primary button
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">
+          Secondary
+        </button>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<section class="section-bg">
+  <div class="container">
+    <h3 class="pt-4 mx-auto text-center">
+      Please enter your login credentials
+    </h3>
+    <div class="row">
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <p class="flash">{{ message }}</p>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <div class="col-lg-8 col-md-10 mx-auto mb-3">{{ render_form(form) }}</div>
+    </div>
+    <p class="text-center pb-3">
+      Not already signed up? Click
+      <a href="{{ url_for('register') }}">Click here to register</a>
+    </p>
+  </div>
+</section>
+
+{% endblock %}
