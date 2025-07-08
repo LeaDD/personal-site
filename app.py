@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, flash
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
 from flask_login import LoginManager, login_user, UserMixin, current_user, logout_user
 import os
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, CreatePostForm
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, Text, ForeignKey
@@ -150,8 +150,8 @@ def register():
     if registration_form.validate_on_submit():
         user_email = registration_form.email.data
         if db.session.execute(db.Select(User).where(User.email == user_email)).scalar_one_or_none():
-            flash("An account with that email is already registered. Please login")
-            # return redirect(url_for("login"))
+            flash("An account with that email is already registered. Please login.")
+            return redirect(url_for("login"))
         else:
             hashed_and_salted_pw = generate_password_hash(
                 registration_form.password.data, method="pbkdf2:sha256", salt_length=10
@@ -189,6 +189,26 @@ def login():
         else:
             print("Something is amiss")
     return render_template("login.html", form=login_form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+
+@app.route("/new-post", methods=["GET", "POST"])
+def new_post():
+    form = CreatePostForm()
+    if form.validate_on_submit():
+        new_post = BlogPost(
+            title = form.title.data,
+            subtitle = form.subtitle.data,
+            body = form.body.data,
+            img_url = form.img_url.data
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for("home"))
+    return render_template("new-post.html", form=form)
 
 
 if __name__ == "__main__":

@@ -62,6 +62,7 @@
                     Blog
                   </a>
                 </li>
+                {% if not current_user.is_authenticated %}
                 <li class="nav-item">
                   <a
                     class="nav-link text-white px-3"
@@ -71,6 +72,17 @@
                     Login/Register
                   </a>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                  <a
+                    class="nav-link text-white px-3"
+                    href="{{ url_for('logout') }}"
+                  >
+                    <i class="bi bi-heartbreak" style="font-size: 24px"> </i>
+                    Logout
+                  </a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                   <a class="nav-link text-white px-3" href="#">
                     <i class="bi bi-flask" style="font-size: 24px"> </i>

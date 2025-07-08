@@ -14,10 +14,9 @@
   }
 }
 .bg-wallpaper-footer {
-    position: relative;
-    background-image: url("../img/game-table.jpg");
-    /* background-color: #5a8ca5; */
-    background-attachment: fixed;
+    background-image: 
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("../img/game-table.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

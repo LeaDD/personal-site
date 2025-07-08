@@ -33,6 +33,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- Trumbowyg CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/trumbowyg@2.27.3/dist/ui/trumbowyg.min.css"
+    />
   </head>
 
   <body class="bg-wallpaper bg-overlay">
@@ -46,5 +51,18 @@
       integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
       crossorigin="anonymous"
     ></script>
+
+    <!-- jQuery (required for Trumbowyg) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+    <!-- Trumbowyg JS -->
+    <script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.27.3/dist/trumbowyg.min.js"></script>
+
+    <!-- Init Trumbowyg on #body -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        $("textarea#body").trumbowyg();
+      });
+    </script>
   </body>
 </html>
