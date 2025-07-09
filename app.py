@@ -30,6 +30,19 @@ login_manager.init_app(app)
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+
+def admin_only(function):
+    @wraps(function)
+    def wrapper_function(*args, **kwargs):
+        if current_user.admin == 1:
+            return function()
+        else:
+            return abort(403)
+    return wrapper_function
+
+
+# TODO: gravatar
+
 #############################################
 # Create database
 #############################################
@@ -103,6 +116,12 @@ class Comment(db.Model):
 # Routes
 #############################################
 
+# TODO: Admin only wrapper
+# TODO: Protect routes
+# TODO: Figure out how to create admin user
+# TODO: Hide sandbox and admin panel buttons
+
+
 # Home page
 @app.route("/")
 def home():
@@ -111,37 +130,10 @@ def home():
 # Blog main page
 @app.route("/blog")
 def blog_posts():
-    dummy_posts = [
-        {
-            "id": 1,
-            "title": "Getting started with Flask",
-            "subtitle": "A quick walkthrough or routes, views and templates.",
-            "author": {"name": "David Deal"},
-            "date": "June 25, 2025",
-        },
-        {
-            "id": 2,
-            "title": "Test 2",
-            "subtitle": "Just testing layout.",
-            "author": {"name": "David Deal"},
-            "date": "June 26, 2025",
-        },
-        {
-            "id": 3,
-            "title": "Test 3",
-            "subtitle": "Before setting up the DB.",
-            "author": {"name": "David Deal"},
-            "date": "June 27, 2025",
-        },
-        {
-            "id": 4,
-            "title": "Test 4",
-            "subtitle": "And then maybe deploy.",
-            "author": {"name": "David Deal"},
-            "date": "June 28, 2025",
-        },
-    ]
-    return render_template("blog.html", all_posts=dummy_posts)
+    print(current_user.admin)
+    result = db.session.execute(db.select(BlogPost).order_by(BlogPost.date.desc()))
+    posts=result.scalars().all()
+    return render_template("blog.html", all_posts=posts)
 
 # Register new user
 @app.route("/register", methods=["GET", "POST"])
@@ -197,18 +189,29 @@ def logout():
 
 @app.route("/new-post", methods=["GET", "POST"])
 def new_post():
+    print(current_user.is_authenticated)
     form = CreatePostForm()
     if form.validate_on_submit():
         new_post = BlogPost(
             title = form.title.data,
             subtitle = form.subtitle.data,
             body = form.body.data,
-            img_url = form.img_url.data
+            img_url = form.img_url.data or "",
+            author = current_user
         )
+        new_post.generate_slug()
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for("home"))
+        return redirect(url_for("blog_posts"))
     return render_template("new-post.html", form=form)
+
+# TODO: View post route
+
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
+def show_post(post_id):
+    requested_post = db.get_or_404(BlogPost, post_id)
+    return render_template("post.html", post=requested_post)
+    
 
 
 if __name__ == "__main__":

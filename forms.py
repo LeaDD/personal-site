@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length, URL
+from wtforms.validators import DataRequired, Email, Length, URL, Optional
 
 
 class RegisterForm(FlaskForm):
@@ -19,6 +19,8 @@ class LoginForm(FlaskForm):
 class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
     subtitle = StringField("Subtitle", validators=[DataRequired()])
-    img_url = StringField("Blog Image URL (optional)", validators=[DataRequired(), URL()])
+    img_url = StringField("Blog Image URL (optional)", validators=[URL(), Optional()])
     body = TextAreaField("Blog Content", validators=[DataRequired()])
     submit = SubmitField("Submit Post")
+    
+# TODO: Comment form

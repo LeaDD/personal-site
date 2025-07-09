@@ -28,16 +28,19 @@
         <!-- Post previews -->
         {% for post in all_posts %}
         <div>
-          <a class="link-underline-dark" href="#">
+          <a
+            class="link-underline-dark"
+            href="{{ url_for('show_post', post_id=post.id) }}"
+          >
             <h3 class="link-light">{{ post.title }}</h3>
             <h4 class="link-secondary">{{ post.subtitle }}</h4>
           </a>
           <p>
             Posted by {{ post.author.name }} on {{ post.date }}
             <!-- TODO: Only show delete button if user is admin -->
-            {# {% if current_user.admin == True %} #}
+            {% if current_user.admin == True %}
             <a href="#">✘</a>
-            {# {% endif %} #}
+            {% endif %}
           </p>
         </div>
         <hr class="my-4" />
