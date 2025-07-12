@@ -1,17 +1,19 @@
 from dotenv import load_dotenv
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, abort
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
 from flask_login import LoginManager, login_user, UserMixin, current_user, logout_user
 import os
-from forms import RegisterForm, LoginForm, CreatePostForm
+from forms import RegisterForm, LoginForm, CreatePostForm, CommentForm
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, String, Text, ForeignKey
+from sqlalchemy import Integer, String, Text, ForeignKey, Boolean, text
 from typing import List
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from slugify import slugify
-
+from functools import wraps
+import hashlib
+from flask_migrate import Migrate
 
 load_dotenv()
 
@@ -30,18 +32,23 @@ login_manager.init_app(app)
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+def gravatar_url(email, size=50):
+    email_hash = hashlib.md5(email.strip().lower().encode('utf-8')).hexdigest()
+    return f"https://www.gravatar.com/avatar/{email_hash}?s={size}&d=identicon"
+
+app.jinja_env.globals["gravatar_url"] = gravatar_url
+
 
 def admin_only(function):
-    @wraps(function)
+    @wraps(function) # Ensures the wrapped func keeps its name, docstring, etc so that tools like Flask (which uses route names) don’t get confused.
+    # Without @wraps, Flask might think the route is called wrapper_function instead of delete_post, which breaks url_for() and debugging tools.
     def wrapper_function(*args, **kwargs):
         if current_user.admin == 1:
-            return function()
+            return function(*args, **kwargs)
         else:
             return abort(403)
     return wrapper_function
 
-
-# TODO: gravatar
 
 #############################################
 # Create database
@@ -52,6 +59,7 @@ class Base(DeclarativeBase):
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URI", "sqlite:///posts.db")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
+migrate = Migrate(app, db)
 
 #############################################
 # Configure models
@@ -87,6 +95,7 @@ class BlogPost(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=True)
     slug: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    is_hidden: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("0"))
 
     comments: Mapped[List["Comment"]] = relationship(
         back_populates="parent_post",
@@ -116,10 +125,8 @@ class Comment(db.Model):
 # Routes
 #############################################
 
-# TODO: Admin only wrapper
 # TODO: Protect routes
 # TODO: Figure out how to create admin user
-# TODO: Hide sandbox and admin panel buttons
 
 
 # Home page
@@ -130,8 +137,9 @@ def home():
 # Blog main page
 @app.route("/blog")
 def blog_posts():
-    print(current_user.admin)
-    result = db.session.execute(db.select(BlogPost).order_by(BlogPost.date.desc()))
+    result = db.session.execute(
+        db.select(BlogPost).where(BlogPost.is_hidden == False).order_by(BlogPost.date.desc())
+    )
     posts=result.scalars().all()
     return render_template("blog.html", all_posts=posts)
 
@@ -160,6 +168,7 @@ def register():
             return redirect(url_for("blog_posts"))
     return render_template("register.html", form=registration_form)
 
+# Login user
 @app.route("/login", methods=["GET", "POST"])
 def login():
     login_form = LoginForm()
@@ -182,12 +191,15 @@ def login():
             print("Something is amiss")
     return render_template("login.html", form=login_form)
 
+# Logout user
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("home"))
 
+# Add a new post. Admin only function.
 @app.route("/new-post", methods=["GET", "POST"])
+@admin_only
 def new_post():
     print(current_user.is_authenticated)
     form = CreatePostForm()
@@ -205,13 +217,59 @@ def new_post():
         return redirect(url_for("blog_posts"))
     return render_template("new-post.html", form=form)
 
-# TODO: View post route
-
-@app.route("/post/<int:post_id>", methods=["GET", "POST"])
-def show_post(post_id):
-    requested_post = db.get_or_404(BlogPost, post_id)
-    return render_template("post.html", post=requested_post)
+# Show post detail in a new page
+@app.route("/post/<slug>", methods=["GET", "POST"])
+def show_post(slug):
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(
+            comment = comment_form.comment.data,
+            comment_author = current_user,
+            post_id=post_id
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        
+        return redirect(url_for("show_post", post_id=post_id))
     
+    requested_post = db.session.execute(db.Select(BlogPost).where(BlogPost.slug == slug)).scalar_one_or_none()
+    return render_template("post.html", post=requested_post, form=comment_form)
+    
+# Mark a post is_hidden so as to not render it in the blog_posts page    
+@app.route("/delete-post/<int:post_id>", methods=["GET", "POST"])
+@admin_only
+def delete_post(post_id):
+    post_to_hide = db.get_or_404(BlogPost, post_id)
+    post_to_hide.is_hidden = True    
+    db.session.commit()
+    return redirect(url_for("blog_posts"))
+
+# TODO: Edit post route
+@app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+@admin_only
+def edit_post(post_id):
+    post = db.get_or_404(BlogPost, post_id)
+    edit_form = CreatePostForm(
+        title=post.title,
+        subtitle=post.subtitle,
+        img_url=post.img_url or "",
+        body=post.body
+    )
+    if edit_form.validate_on_submit():
+        post.title = edit_form.title.data
+        post.subtitle = edit_form.subtitle.data
+        post.img_url = edit_form.img_url.data
+        post.author = current_user
+        post.body = edit_form.body.data
+        
+        db.session.commit()
+        return redirect(url_for("show_post", post_id=post.id))
+        
+    return render_template("new-post.html", post=post, form=edit_form, is_edit=True)
+
+# TODO: Sandbox page route
+
+# TODO: Admin panel route
 
 
 if __name__ == "__main__":

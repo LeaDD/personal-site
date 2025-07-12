@@ -62,7 +62,20 @@
                     Blog
                   </a>
                 </li>
-                {% if not current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link text-white px-3" href="#">
+                    <i class="bi bi-flask" style="font-size: 24px"> </i>
+                    Sandbox
+                  </a>
+                </li>
+                {% if current_user.admin == 1 %}
+                <li class="nav-item">
+                  <a class="nav-link text-white px-3" href="#">
+                    <i class="bi bi-robot" style="font-size: 24px"> </i>
+                    Admin Panel
+                  </a>
+                </li>
+                {% endif %} {% if not current_user.is_authenticated %}
                 <li class="nav-item">
                   <a
                     class="nav-link text-white px-3"
@@ -80,20 +93,6 @@
                   >
                     <i class="bi bi-heartbreak" style="font-size: 24px"> </i>
                     Logout
-                  </a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link text-white px-3" href="#">
-                    <i class="bi bi-flask" style="font-size: 24px"> </i>
-                    Sandbox
-                  </a>
-                </li>
-                {% if current_user.admin == 1 %}
-                <li class="nav-item">
-                  <a class="nav-link text-white px-3" href="#">
-                    <i class="bi bi-robot" style="font-size: 24px"> </i>
-                    Admin Panel
                   </a>
                 </li>
                 {% endif %}

@@ -1,0 +1,59 @@
+######################################################
+# DB UPDATES AND MIGRATION
+######################################################
+
+# How to Add a New Column (is_hidden) to BlogPost Table Using Flask-Migrate #####
+
+1. Modify your BlogPost model in app.py to include the new column:
+
+    from sqlalchemy import text
+
+    class BlogPost(db.Model):
+        ...
+        is_hidden: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("0"))
+
+2. Generate the migration:
+   Run this command from the terminal (in project root with virtualenv activated):
+
+    flask db migrate -m "Add is_hidden column to BlogPost"
+
+3. Verify the generated migration (in migrations/versions/...) includes:
+
+    op.add_column('blog_post',
+        sa.Column('is_hidden', sa.Boolean(), nullable=False, server_default=sa.text('0'))
+    )
+
+4. Apply the migration:
+
+    flask db upgrade
+
+5. Why server_default is required:
+   SQLite doesn’t allow adding a NOT NULL column without a default.
+   `server_default=text("0")` prevents a migration failure.
+
+6. Optional check:
+   Enter the Flask shell to confirm the column exists:
+
+    flask shell
+    >>> from app import db, BlogPost
+    >>> db.inspect(BlogPost).columns.keys()
+
+# Notes:
+- This assumes Flask-Migrate is initialized in app.py:
+    from flask_migrate import Migrate
+    migrate = Migrate(app, db)
+
+- Run these commands only once after model change.
+- On deploy (PostgreSQL), run `flask db upgrade` after setting up the production DB.
+
+# Abbreviated version with post deploy instructions #####
+
+1. Make model changes in code (e.g., add is_hidden column)
+2. Run: flask db migrate -m "Describe the change"
+   → This generates a migration script under migrations/versions/
+3. Run: flask db upgrade
+   → This applies the migration to your local dev DB (SQLite)
+4. Commit and push the migrations folder to GitHub
+5. After deploying to Render, run:
+   flask db upgrade
+   → This applies the same migration to the prod DB (PostgreSQL)

@@ -3,7 +3,11 @@
 
 <section class="position-relative">
   <div class="px-4 py-5 my-5 text-center text-light">
+    {% if is_edit %}
+    <h1 class="display-5 fw-bold my-5">Edit post</h1>
+    {% else %}
     <h1 class="display-5 fw-bold my-5">Add a new post to the blog</h1>
+    {% endif %}
     <div class="col-lg-6 mx-auto">
       <p class="lead my-5">What's on your mind?</p>
       <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">

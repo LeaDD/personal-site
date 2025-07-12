@@ -29,3 +29,6 @@ Thumbs.db
 
 # Testing DBs
 *.db
+
+# My notes
+notes.txt
