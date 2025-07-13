@@ -129,10 +129,6 @@ class Comment(db.Model):
 # Routes
 #############################################
 
-# TODO: Protect routes
-# TODO: Figure out how to create admin user
-
-
 # Home page
 @app.route("/")
 def home():
