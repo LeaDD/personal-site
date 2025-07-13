@@ -13,12 +13,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from slugify import slugify
 from functools import wraps
 import hashlib
-from flask_migrate import Migrate
-
-if os.getenv("RENDER") is None:
-    load_dotenv()
+from flask_migrate import Migrate    
 
 app = Flask(__name__)
+
+is_render = os.getenv("RENDER")
+
+if is_render is None:
+    load_dotenv()
+    db_path = os.path.join(app.instance_path, "posts.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DB_URI"]  # Explicitly required on Render
+    
 secret = os.getenv("MY_SECRET_KEY")
 if not secret:
     raise RuntimeError("Missing MY_SECRET_KEY! Set it in your environment variables.")
@@ -60,7 +67,6 @@ def admin_only(function):
 class Base(DeclarativeBase):
     pass
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URI", "sqlite:///posts.db")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 migrate = Migrate(app, db)
@@ -281,4 +287,4 @@ def edit_post(slug):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=(is_render is None))
