@@ -137,11 +137,19 @@ def home():
 # Blog main page
 @app.route("/blog")
 def blog_posts():
-    result = db.session.execute(
-        db.select(BlogPost).where(BlogPost.is_hidden == False).order_by(BlogPost.date.desc())
-    )
-    posts=result.scalars().all()
-    return render_template("blog.html", all_posts=posts)
+    try:
+        print("📍 /blog route hit")
+        result = db.session.execute(
+            db.select(BlogPost).where(BlogPost.is_hidden == False).order_by(BlogPost.date.desc())
+        )
+        posts = result.scalars().all()
+        print(f"✅ Retrieved {len(posts)} posts")
+        return render_template("blog.html", all_posts=posts)
+    except Exception as e:
+        import traceback
+        print("🔥 Exception occurred in /blog")
+        traceback.print_exc()
+        return "Internal error in /blog", 500
 
 # Register new user
 @app.route("/register", methods=["GET", "POST"])
