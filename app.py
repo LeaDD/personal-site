@@ -15,10 +15,14 @@ from functools import wraps
 import hashlib
 from flask_migrate import Migrate
 
-load_dotenv()
+if os.getenv("RENDER") is None:
+    load_dotenv()
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.getenv("MY_SECRET_KEY", "dev_key_for_local_testing")
+secret = os.getenv("MY_SECRET_KEY")
+if not secret:
+    raise RuntimeError("Missing MY_SECRET_KEY! Set it in your environment variables.")
+app.config["SECRET_KEY"] = secret
 
 bootstrap = Bootstrap5(app)
 
@@ -116,7 +120,7 @@ class Comment(db.Model):
     comment_author: Mapped["User"] = relationship(back_populates="comments")
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
-    post_id: Mapped["BlogPost"] = mapped_column(
+    post_id: Mapped[int] = mapped_column(
         ForeignKey("blog_posts.id"), nullable=False
     )
     parent_post: Mapped["BlogPost"] = relationship(back_populates="comments")
@@ -185,7 +189,6 @@ def login():
             flash("Sorry, that password is invalid. Please try again.")
         elif check_password_hash(user.password, password):
             login_user(user)
-            print(current_user.is_authenticated)
             return redirect(url_for("home"))
         else:
             print("Something is amiss")
@@ -221,22 +224,21 @@ def new_post():
 @app.route("/post/<slug>", methods=["GET", "POST"])
 def show_post(slug):
     comment_form = CommentForm()
+    requested_post = db.session.execute(db.Select(BlogPost).where(BlogPost.slug == slug)).scalar_one_or_none()
     if comment_form.validate_on_submit():
         new_comment = Comment(
             comment = comment_form.comment.data,
             comment_author = current_user,
-            post_id=post_id
+            parent_post = requested_post
         )
         db.session.add(new_comment)
         db.session.commit()
         
-        return redirect(url_for("show_post", post_id=post_id))
-    
-    requested_post = db.session.execute(db.Select(BlogPost).where(BlogPost.slug == slug)).scalar_one_or_none()
+        return redirect(url_for("show_post", slug=slug))    
     return render_template("post.html", post=requested_post, form=comment_form)
     
 # Mark a post is_hidden so as to not render it in the blog_posts page    
-@app.route("/delete-post/<int:post_id>", methods=["GET", "POST"])
+@app.route("/delete-post/<int:post_id>", methods=["POST"])
 @admin_only
 def delete_post(post_id):
     post_to_hide = db.get_or_404(BlogPost, post_id)
@@ -244,11 +246,11 @@ def delete_post(post_id):
     db.session.commit()
     return redirect(url_for("blog_posts"))
 
-# TODO: Edit post route
-@app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+# Edit an existing post
+@app.route("/edit-post/<slug>", methods=["GET", "POST"])
 @admin_only
-def edit_post(post_id):
-    post = db.get_or_404(BlogPost, post_id)
+def edit_post(slug):
+    post = db.session.execute(db.Select(BlogPost).where(BlogPost.slug == slug)).scalar_one_or_none()
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -263,13 +265,15 @@ def edit_post(post_id):
         post.body = edit_form.body.data
         
         db.session.commit()
-        return redirect(url_for("show_post", post_id=post.id))
+        return redirect(url_for("show_post", slug=slug))
         
     return render_template("new-post.html", post=post, form=edit_form, is_edit=True)
 
 # TODO: Sandbox page route
 
 # TODO: Admin panel route
+
+# TODO: Wire up contact form and explore mail handling applications.
 
 
 if __name__ == "__main__":

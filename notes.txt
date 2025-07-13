@@ -57,3 +57,43 @@
 5. After deploying to Render, run:
    flask db upgrade
    → This applies the same migration to the prod DB (PostgreSQL)
+
+######################################################
+# MAIL
+######################################################
+
+Contact Form Handling
+
+You’ve marked this as a TODO — once you circle back to it post-deploy, consider putting it behind a honeypot or basic CAPTCHA to avoid spam.
+
+# Alternate mail form
+<!-- <form>
+    <div class="mb-2">
+    <label for="name" class="form-label mb-1">Your Name</label>
+    <input
+        type="text"
+        class="form-control form-control-s py-1 px-2"
+        id="name"
+        placeholder="Jane Doe"
+    />
+    </div>
+    <div class="mb-2">
+    <label for="email" class="form-label mb-1">Your Email</label>
+    <input
+        type="email"
+        class="form-control form-control-s py-1 px-2"
+        id="email"
+        placeholder="name@example.com"
+    />
+    </div>
+    <div class="mb-2">
+    <label for="message" class="form-label mb-1">Message</label>
+    <textarea
+        class="form-control form-control-s py-1 px-2"
+        id="message"
+        rows="3"
+        placeholder="Write your message here...try to be nice"
+    ></textarea>
+    </div>
+    <button type="submit" class="btn btn-dark btn-sm">Send</button>
+</form> -->

@@ -22,7 +22,7 @@
   </div>
 </section>
 
-<section class="section-bg">
+<section class="section-bg min-h-200">
   <div class="container">
     <h3 class="pt-4 mx-auto text-center">
       Please enter your login credentials
@@ -30,7 +30,7 @@
     <div class="row">
       {% with messages = get_flashed_messages() %} {% if messages %} {% for
       message in messages %}
-      <p class="flash">{{ message }}</p>
+      <p class="flash text-center">{{ message }}</p>
       {% endfor %} {% endif %} {% endwith %}
 
       <div class="col-lg-8 col-md-10 mx-auto mb-3">{{ render_form(form) }}</div>

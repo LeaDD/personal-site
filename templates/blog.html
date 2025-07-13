@@ -37,8 +37,22 @@
           </a>
           <p>
             Posted by {{ post.author.name }} on {{ post.date }} {% if
-            current_user.admin == True %}
-            <a href="{{ url_for('delete_post', post_id=post.id) }}">✘</a>
+            current_user.admin %}
+            <span style="display: inline">
+              <form
+                method="post"
+                action="{{ url_for('delete_post', post_id=post.id) }}"
+                style="display: inline"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-link text-danger p-0 m-0 align-baseline"
+                  style="text-decoration: none"
+                >
+                  ✘
+                </button>
+              </form>
+            </span>
             {% endif %}
           </p>
         </div>

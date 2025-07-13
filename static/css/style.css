@@ -131,3 +131,7 @@ body, p, li, a, .nav-link, .btn {
 .commentText p {
   margin:0;
 }
+
+.min-h-200 {
+  min-height: 350px;
+}

@@ -11,7 +11,7 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField("Enter your email", validators=[DataRequired()])
+    email = StringField("Enter your email", validators=[DataRequired(), Email()])
     password = PasswordField("Enter your password", validators=[DataRequired()])
     login = SubmitField("Login")
 
@@ -26,3 +26,9 @@ class CreatePostForm(FlaskForm):
 class CommentForm(FlaskForm):
     comment = TextAreaField("Comment", validators=[DataRequired()])
     submit = SubmitField("Submit Comment")
+    
+class ContactForm(FlaskForm):
+    name = StringField("Your Name", validators=[DataRequired()])
+    email = StringField("Your Email", validators=[DataRequired(), Email()])
+    message = StringField("Message", validators=[DataRequired()])
+    submit = SubmitField("Send")

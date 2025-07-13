@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block content %}
+{% from "bootstrap5/form.html" import render_form %} {% extends 'base.html' %}
+{% block content %}
 
 <section class="position-relative">
   <!-- Hero -->
@@ -139,7 +140,7 @@
         />
       </div>
       <hr class="featurette-divider" />
-      <div class="row featurette my-5">
+      <div class="row featurette mt-5">
         <div class="col-md-7 order-md-2">
           <h2 class="featurette-heading fw-normal lh-1">
             I’m a drone enthusiast —
@@ -174,44 +175,23 @@
     <!-- /END THE FEATURETTES -->
   </div>
 
-  <!-- Contact -->
-  <div class="container">
+  <!-- Contact - will revisit this...just doing a simple mailto for now -->
+  <div class="container section-bg">
     <div class="row">
-      <div class="col-12 col-md-6 mb-5">
-        <h3>Want to contact me?</h3>
-        <form>
-          <div class="mb-2">
-            <label for="name" class="form-label mb-1">Your Name</label>
-            <input
-              type="text"
-              class="form-control form-control-s py-1 px-2"
-              id="name"
-              placeholder="Jane Doe"
-            />
-          </div>
-          <div class="mb-2">
-            <label for="email" class="form-label mb-1">Your Email</label>
-            <input
-              type="email"
-              class="form-control form-control-s py-1 px-2"
-              id="email"
-              placeholder="name@example.com"
-            />
-          </div>
-          <div class="mb-2">
-            <label for="message" class="form-label mb-1">Message</label>
-            <textarea
-              class="form-control form-control-s py-1 px-2"
-              id="message"
-              rows="3"
-              placeholder="Write your message here...try to be nice"
-            ></textarea>
-          </div>
-          <button type="submit" class="btn btn-dark btn-sm">Send</button>
-        </form>
-      </div>
+      <section class="text-light text-center">
+        <div class="container">
+          <h5 class="mb-3">Want to contact me?</h5>
+          <p>
+            Mail me at 
+            <a href="mailto:darthmidlo@darthmidlo.com" class="text-info text-decoration-underline">
+              darthmidlo@darthmidlo.com
+            </a>
+          </p>
+        </div>
+      </section>
     </div>
   </div>
 </section>
 
-{% endblock %}
+  {% endblock %}
+</section>
