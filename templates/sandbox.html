@@ -1,0 +1,18 @@
+   {% extends "base.html" %}
+   
+   {% block content %}
+   <h1>Reading Dashboard Sandbox</h1>
+   <div id="books-container"></div>
+   {% endblock %}
+   
+   {% block scripts %}
+   <script>
+   // JavaScript from section 11.3 goes here
+   fetch('http://YOUR_EC2_IP:8000/books')
+     .then(response => response.json())
+     .then(data => {
+       console.log(data);
+       // Render data to #books-container
+     });
+   </script>
+   {% endblock %}
