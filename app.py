@@ -279,7 +279,9 @@ def edit_post(slug):
         
     return render_template("new-post.html", post=post, form=edit_form, is_edit=True)
 
-# TODO: Sandbox page route
+@app.route('/sandbox')
+def sandbox():
+    return render_template('sandbox.html')
 
 # TODO: Admin panel route
 
