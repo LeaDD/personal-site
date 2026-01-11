@@ -1,6 +1,6 @@
-   {% extends "base.html" %}
-   
-   {% block content %}
+{% extends "base.html" %}
+
+{% block content %}
 
 <section class="position-relative">
   <div class="px-4 py-5 my-5 text-center text-light">
@@ -22,17 +22,21 @@
   </div>
 </section>
 
-   <div id="books-container"></div>
-   {% endblock %}
+<div id="books-container">
+  {% for book in books %}
+    <div>{{ book.title }} by {{ book.authors }}</div>
+  {% endfor %}
+</div>
+{% endblock %}
    
-   {% block scripts %}
-   <script>
-   // JavaScript from section 11.3 goes here
-   fetch('http://3.16.29.255:8000/books')
-     .then(response => response.json())
-     .then(data => {
-       console.log(data);
-       // Render data to #books-container
-     });
-   </script>
-   {% endblock %}
+{% block scripts %}
+<script>
+// JavaScript from section 11.3 goes here
+fetch('http://3.16.29.255:8000/books')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Render data to #books-container
+  });
+</script>
+{% endblock %}
