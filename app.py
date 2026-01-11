@@ -14,6 +14,7 @@ from slugify import slugify
 from functools import wraps
 import hashlib
 from flask_migrate import Migrate    
+import requests
 
 app = Flask(__name__)
 
@@ -281,7 +282,17 @@ def edit_post(slug):
 
 @app.route('/sandbox')
 def sandbox():
-    return render_template('sandbox.html')
+    # Server to server call (Flask -> FastAPI)
+    try:
+        print("📍 Fetching books from FastAPI server...")
+        response = requests.get('http://3.16.29.255:8000/books')
+        response.raise_for_status()  # Raise an error for bad responses
+        books = response.json()
+    except requests.RequestException as e:
+        print(f"Error fetching books: {e}")
+        books = []
+
+    return render_template('sandbox.html', books=books)
 
 # TODO: Admin panel route
 

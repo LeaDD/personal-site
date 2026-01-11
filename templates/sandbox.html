@@ -1,18 +1,42 @@
-   {% extends "base.html" %}
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="position-relative">
+  <div class="px-4 py-5 my-5 text-center text-light">
+    <h1 class="display-5 fw-bold my-5">Welcome to the sandbox!</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead my-5">
+        This will be the location for testing out various code snippets and APIs and 
+        other integrations.
+      </p>
+      <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+    <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+      Primary button
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-lg px-4">
+      Secondary
+    </button>
+  </div> -->
+    </div>
+  </div>
+</section>
+
+<div id="books-container">
+  {% for book in books %}
+    <div>{{ book.title }} by {{ book.authors }}</div>
+  {% endfor %}
+</div>
+{% endblock %}
    
-   {% block content %}
-   <h1>Reading Dashboard Sandbox</h1>
-   <div id="books-container"></div>
-   {% endblock %}
-   
-   {% block scripts %}
-   <script>
-   // JavaScript from section 11.3 goes here
-   fetch('http://YOUR_EC2_IP:8000/books')
-     .then(response => response.json())
-     .then(data => {
-       console.log(data);
-       // Render data to #books-container
-     });
-   </script>
-   {% endblock %}
+{% block scripts %}
+<script>
+// JavaScript from section 11.3 goes here
+fetch('http://3.16.29.255:8000/books')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Render data to #books-container
+  });
+</script>
+{% endblock %}

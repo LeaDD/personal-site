@@ -30,5 +30,8 @@ Thumbs.db
 # Testing DBs
 *.db
 
+# Local Flask instance folder
+instance/
+
 # My notes
 notes.txt
