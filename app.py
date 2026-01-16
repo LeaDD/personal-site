@@ -262,6 +262,10 @@ def delete_post(post_id):
 @admin_only
 def edit_post(slug):
     post = db.session.execute(db.Select(BlogPost).where(BlogPost.slug == slug)).scalar_one_or_none()
+
+    if post is None:
+        abort(404)
+    
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
