@@ -262,6 +262,10 @@ def delete_post(post_id):
 @admin_only
 def edit_post(slug):
     post = db.session.execute(db.Select(BlogPost).where(BlogPost.slug == slug)).scalar_one_or_none()
+
+    if post is None:
+        abort(404)
+    
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -282,13 +286,17 @@ def edit_post(slug):
 
 @app.route('/sandbox')
 def sandbox():
+    api_key = os.getenv("FASTAPI_API_KEY")
+    api_url = os.getenv("FASTAPI_API_URL", "http://3.16.29.255:8000")
+
     # Server to server call (Flask -> FastAPI)
     try:
         print("📍 Fetching books from FastAPI server...")
-        response = requests.get('http://3.16.29.255:8000/books')
+        headers = {'x-api-key': api_key} if api_key else {}
+        response = requests.get(f"{api_url}/books", headers=headers, timeout=5)
         response.raise_for_status()  # Raise an error for bad responses
         books = response.json()
-    except requests.RequestException as e:
+    except requests.exceptions.RequestException as e:
         print(f"Error fetching books: {e}")
         books = []
 
